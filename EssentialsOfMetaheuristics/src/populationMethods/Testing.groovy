@@ -1,5 +1,0 @@
-package populationMethods
-
-class Testing {
-
-}
