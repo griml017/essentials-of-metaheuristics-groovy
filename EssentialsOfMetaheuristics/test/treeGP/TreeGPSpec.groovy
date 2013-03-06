@@ -2,10 +2,10 @@ package treeGP
 
 import spock.lang.Specification
 import treeGP.TreeGPImplementation
+import treeGP.InternalNode
+import Math.*
 
 class TreeGPSpec extends Specification{
-    
-    def testTree = new TreeGPImplementation("4") 
     
     def "Test impromper expression"() {
         expect:
@@ -13,8 +13,14 @@ class TreeGPSpec extends Specification{
     }
     
     def "Test "() {
-        expect:
-        true
+        when:
+        def func = multiply
+        InternalNode test = new InternalNode(func)
+        
+        then:
+        test.left == null
+        test.right == null
+        test.root == func
     }
 
 }
