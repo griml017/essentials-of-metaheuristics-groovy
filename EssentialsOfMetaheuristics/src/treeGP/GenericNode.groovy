@@ -44,21 +44,7 @@ class GenericNode {
     }
 
     def isEqual(node) {
-        def returnValue = true
-        if (!isALeaf && !this.function.isEqual(node.function)&& !node.isALeaf) {
-            returnValue = false
-        }
-        if (this.value != node.value) {
-            returnValue = false
-        }
-
-        if (!this.children.equals(node.children)) {
-            returnValue = false
-        }
-        if (this.isALeaf != node.isALeaf) {
-            returnValue = false
-        }
-        return returnValue
+        //TO DO!
     }
 
     def getRoot() {
