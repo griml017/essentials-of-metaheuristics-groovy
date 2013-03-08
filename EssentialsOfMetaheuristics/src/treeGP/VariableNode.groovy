@@ -1,12 +1,15 @@
 package treeGP
 
-class VariableNode {
+class VariableNode extends GenericNode {
+    def VariableNode(String name) {
+           this.name = name
+    }
     
-    def left = null
-    def right = null
-    char name
-    def VariableNode(name) {
-        InternalNode variable = new InternalNode(name)
-        variable.left = null
+    def copy() {
+        new VariableNode(name)
+    }
+    
+    String toString(){
+        "Name: " + name
     }
 }

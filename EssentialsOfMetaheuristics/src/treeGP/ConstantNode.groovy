@@ -1,11 +1,15 @@
 package treeGP
 
-class ConstantNode {
-    def left = null
-    def right = null
+class ConstantNode extends GenericNode {
+    def ConstantNode(int value) {
+           this.value = value
+    }
     
-    Integer value
-    def ConstantNode(value) {
-        
+    def copy() {
+        new ConstantNode(value)
+    }
+    
+    String toString(){
+        value
     }
 }

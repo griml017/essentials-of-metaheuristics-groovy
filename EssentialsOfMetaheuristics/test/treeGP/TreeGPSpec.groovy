@@ -3,7 +3,7 @@ package treeGP
 import spock.lang.Specification
 import treeGP.TreeGPImplementation
 import treeGP.InternalNode
-import Math.*
+import java.lang.Math.*
 
 class TreeGPSpec extends Specification{
     
@@ -12,15 +12,16 @@ class TreeGPSpec extends Specification{
         true
     }
     
-    def "Test "() {
+    def "Test a function node with two constant nodes"() {
         when:
-        def func = multiply
-        InternalNode test = new InternalNode(func)
+        def plus = {x, y -> x+y}
+        ConstantNode seven = new ConstantNode(7)
+        ConstantNode three = new ConstantNode(3)
+        InternalNode test = new InternalNode(plus, seven, three)
         
         then:
-        test.left == null
-        test.right == null
-        test.root == func
+        test.children[0] == seven
+        test.children[1] == three
+        test.eval() == 10
     }
-
 }
