@@ -9,7 +9,4 @@ class ConstantNode extends GenericNode {
         new ConstantNode(value)
     }
     
-    String toString(){
-        value
-    }
 }

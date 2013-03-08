@@ -33,14 +33,4 @@ class InternalNode extends GenericNode {
         }
         oldNode.parent.children.remove(index)
     }
-
-
-    String childrenToString() {
-        def string = ""
-        children.each { string = it.toString() + " " + string}
-    }
-
-    String toString(){
-        "Function: " + function + " Children: " + childrenToString()
-    }
 }

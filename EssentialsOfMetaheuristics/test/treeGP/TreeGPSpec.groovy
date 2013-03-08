@@ -21,7 +21,13 @@ class TreeGPSpec extends Specification{
         
         then:
         test.children[0] == seven
+        seven.value == 7 
         test.children[1] == three
+        three.value == 3
         test.eval() == 10
+    }
+    
+    def "Test a function node with a constant node and a variable node"() {
+        
     }
 }

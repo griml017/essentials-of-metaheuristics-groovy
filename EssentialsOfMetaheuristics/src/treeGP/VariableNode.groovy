@@ -8,8 +8,4 @@ class VariableNode extends GenericNode {
     def copy() {
         new VariableNode(name)
     }
-    
-    String toString(){
-        "Name: " + name
-    }
 }

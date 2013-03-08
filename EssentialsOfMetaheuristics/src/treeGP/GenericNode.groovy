@@ -90,7 +90,7 @@ class GenericNode {
     def eval() {
         def evaluation
         if (children.size() != 0) {
-            evaluation = function(children[0], children[1])
+            evaluation = function(children[0].value, children[1].value)
             return evaluation
         } else {
             if (name instanceof String) {
