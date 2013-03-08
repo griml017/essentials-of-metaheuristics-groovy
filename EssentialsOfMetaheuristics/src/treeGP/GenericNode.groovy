@@ -24,10 +24,10 @@ class GenericNode {
         }
     }
 
-    def copy() {
+    def clone() {
         if (this instanceof InternalNode) {
             def copiedChildren = []
-            children.each { copiedChildren.add(each.copy())
+            children.each { copiedChildren.add(it.clone())
             }
             def newNode = new InternalNode(function)
             copiedChildren.each {
@@ -44,7 +44,23 @@ class GenericNode {
     }
 
     def isEqual(node) {
-        //TO DO!
+        def equal = false
+        if (this instanceof VariableNode && node instanceof VariableNode) {
+            if (this.value == node.value) {
+                equal = true
+            }
+        }
+        if (this instanceof ConstantNode && node instanceof ConstantNode) {
+            if (this.name == node.name) {
+                equal = true
+            }
+        } 
+        if (this instanceof InternalNode && node instanceof InternalNode) {
+            if (this.function == node.function && this.children[0] == node.children[0] && this.children[1] == node.children[1]) {
+                equal = true
+            }
+        }
+        return equal
     }
 
     def getRoot() {
@@ -72,7 +88,6 @@ class GenericNode {
 
     def getValue = null
 
-    // *****************HOW TO DO THIS?*******************
     def eval() {
         def evaluation
         if (children.size() != 0) {

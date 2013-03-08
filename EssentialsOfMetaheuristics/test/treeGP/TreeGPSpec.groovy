@@ -10,11 +10,7 @@ class TreeGPSpec extends Specification{
     def minus = {x, y -> x-y}
     def multiply = {x, y -> x*y}
     def div = {x, y -> x/y}
-    
-    def "Test impromper expression"() {
-        expect:
-        true
-    }
+    def mod = {x, y -> x%y}
     
     def "Test a function node with two constant nodes"() {
         when:
@@ -71,6 +67,19 @@ class TreeGPSpec extends Specification{
         four.value == 4
         test.eval() == 2
     }
+    def "Test a function node with two constant nodes moded"() {
+        when:
+        ConstantNode eight = new ConstantNode(8)
+        ConstantNode four = new ConstantNode(4)
+        InternalNode test = new InternalNode(mod, eight, four)
+        
+        then:
+        test.children[0] == eight
+        eight.value == 8
+        test.children[1] == four
+        four.value == 4
+        test.eval() == 0
+    }
     //FAILING.
     def "Test a function node with one constant node and one variable multiplied"() {
         when:
@@ -126,5 +135,34 @@ class TreeGPSpec extends Specification{
         test.children[1] == four
         four.value == 4
         test.eval() == "a"+4
+    }
+    //FAILING
+    def "Test remove child node"() {
+        when:
+        VariableNode a = new VariableNode("a")
+        ConstantNode four = new ConstantNode(4)
+        InternalNode test = new InternalNode(minus, a, four)
+        test.removeChild(a)
+        
+        then:
+        test.children[0] == null
+        test.children[1] == four
+    }
+    // Make InternalNode isEqual look at result rather than address.
+    def "Test is equal" () {
+        when: 
+        VariableNode a = new VariableNode("a")
+        ConstantNode four = new ConstantNode(4)
+        InternalNode test = new InternalNode(minus, a, four)
+        VariableNode b = new VariableNode("a")
+        ConstantNode four2 = new ConstantNode(4)
+        InternalNode test2 = new InternalNode(minus, a, four)
+        
+        then:
+        a.isEqual(b) == true
+        four.isEqual(four2) == true
+        test.isEqual(test2) == true
+        a.isEqual(four) == false
+        
     }
 }

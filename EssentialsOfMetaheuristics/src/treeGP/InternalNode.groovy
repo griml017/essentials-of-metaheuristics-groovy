@@ -1,6 +1,7 @@
 package treeGP
 
 class InternalNode extends GenericNode {
+    
     def InternalNode(function, leftChild, rightChild) {
         this.function = function
         isALeaf = false
@@ -18,7 +19,7 @@ class InternalNode extends GenericNode {
     }
 
     def removeChild(toRemove) {
-        def newTree = this.getRoot().copy()
+        def newTree = this.getRoot().clone()
         remove(newTree, toRemove)
         return newTree
     }

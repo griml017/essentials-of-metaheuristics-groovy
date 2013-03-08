@@ -5,7 +5,7 @@ class ConstantNode extends GenericNode {
            this.value = value
     }
     
-    def copy() {
+    def clone() {
         new ConstantNode(value)
     }
     

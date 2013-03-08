@@ -5,7 +5,7 @@ class VariableNode extends GenericNode {
            this.name = name
     }
     
-    def copy() {
+    def clone() {
         new VariableNode(name)
     }
 }
