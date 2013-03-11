@@ -15,6 +15,7 @@ class InternalNode extends GenericNode {
             newTree.children.add(node)
             oldNode.children.each {
                 it.parent = oldNode
+                
             }
             return newTree
         } else {
