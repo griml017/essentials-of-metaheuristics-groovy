@@ -2,7 +2,6 @@ package treeGP
 
 import spock.lang.Specification
 import treeGP.TreeGPImplementation
-import treeGP.InternalNode
 import java.lang.Math.*
 
 class TreeGPSpec extends Specification{
@@ -89,7 +88,7 @@ class TreeGPSpec extends Specification{
         
         then:
         test.children[0] == a
-        a.name == "a"
+        a.value == "a"
         test.children[1] == four
         four.value == 4
         test.eval() == "a"*4
@@ -103,7 +102,7 @@ class TreeGPSpec extends Specification{
         
         then:
         test.children[0] == a
-        a.name == "a"
+        a.value == "a"
         test.children[1] == four
         four.value == 4
         test.eval() == "a"+4
@@ -117,7 +116,7 @@ class TreeGPSpec extends Specification{
         
         then:
         test.children[0] == a
-        a.name == "a"
+        a.value == "a"
         test.children[1] == four
         four.value == 4
         test.eval() == "a"+4
@@ -131,10 +130,10 @@ class TreeGPSpec extends Specification{
         
         then:
         test.children[0] == a
-        a.name == "a"
+        a.value == "a"
         test.children[1] == four
         four.value == 4
-        test.eval() == "a"+4
+        test.eval() == "a"-4
     }
     //FAILING
     def "Test remove child node"() {
@@ -148,6 +147,19 @@ class TreeGPSpec extends Specification{
         test.children[0] == null
         test.children[1] == four
     }
+    
+    def "Test add child node"() {
+        when:
+        VariableNode a = new VariableNode("a")
+        ConstantNode four = new ConstantNode(4)
+        InternalNode test = new InternalNode(minus, null, four)
+        test.addChild(a)
+        
+        then:
+        test.children[0] == a
+        test.children[1] == four
+    }
+    
     // Make InternalNode isEqual look at result rather than address.
     def "Test is equal" () {
         when: 
@@ -163,6 +175,23 @@ class TreeGPSpec extends Specification{
         four.isEqual(four2) == true
         test.isEqual(test2) == true
         a.isEqual(four) == false
+        
+    }
+    
+    def "Test clone" () {
+        when:
+        ConstantNode four = new ConstantNode(4)
+        VariableNode a = new VariableNode("a")
+        InternalNode aMinusFour = new InternalNode(minus, a, four)
+        def fourCopied = four.clone()
+        def aCopied = a.clone()
+        def testCopied = aMinusFour.clone()
+        
+        then:
+        fourCopied.value == four.value
+        aCopied.value == a.value
+        testCopied.function == aMinusFour.function
+        testCopied.children[0].value == aMinusFour.children[0].value
         
     }
 }

@@ -3,10 +3,8 @@ package treeGP
 class GenericNode {
     def parent = null
     def children = []
-    //Constant or
+    //Constant orVariable Nodes
     def value = null
-    //Variable Nodes or
-    def name = null
     //Internal Node...
     def function = null
     def isALeaf = true
@@ -26,19 +24,18 @@ class GenericNode {
 
     def clone() {
         if (this instanceof InternalNode) {
-            def copiedChildren = []
-            children.each { copiedChildren.add(it.clone())
-            }
-            def newNode = new InternalNode(function)
-            copiedChildren.each {
-                newNode = newNode.addChild(each)
-            }
-            return newNode
+            def childrenCopies = []
+            childrenCopies.add(children[0].clone())
+            childrenCopies.add(children[1].clone())
+            InternalNode copy = new InternalNode(function, childrenCopies[0], childrenCopies[1])
+            return copy
         } else {
             if (this instanceof VariableNode) {
-                new VariableNode(value)
-            } else {
-                new ConstantNode(name)
+                def copy = new VariableNode(this.value)
+                return copy
+            } else if (this instanceof ConstantNode){
+                def copy = new ConstantNode(this.value)
+                return copy
             }
         }
     }
@@ -51,7 +48,7 @@ class GenericNode {
             }
         }
         if (this instanceof ConstantNode && node instanceof ConstantNode) {
-            if (this.name == node.name) {
+            if (this.value == node.value) {
                 equal = true
             }
         } 
@@ -64,10 +61,12 @@ class GenericNode {
     }
 
     def getRoot() {
-        if (parent != null) {
-            parent.getRoot()
+        def current = this
+        if (current.parent != null) {
+            current = current.parent
+            current.getRoot()
         } else {
-            this
+            return current
         }
     }
 
@@ -94,8 +93,8 @@ class GenericNode {
             evaluation = function(children[0].value, children[1].value)
             return evaluation
         } else {
-            if (name instanceof String) {
-                children.get(name)
+            if (value instanceof String) {
+                children.get(value)
             } else {
                 value
             }

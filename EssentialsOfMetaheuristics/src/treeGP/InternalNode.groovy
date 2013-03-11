@@ -9,29 +9,20 @@ class InternalNode extends GenericNode {
     }
     //Adding and removing children require making a copy of the original tree with the modification...
     def addChild(node) {
-        def newTree = this.getRoot().copy()
-        def oldNode = newTree.get(newTree, this)
-        oldNode.children.add(node)
-        oldNode.children.each {
-            it.parent = oldNode
+        if (!(this.getRoot() == null)){
+            def newTree = this.getRoot().clone()
+            def oldNode = newTree.get(newTree, this)
+            newTree.children.add(node)
+            oldNode.children.each {
+                it.parent = oldNode
+            }
+            return newTree
+        } else {
+            return 
         }
-        return newTree
     }
 
     def removeChild(toRemove) {
-        def newTree = this.getRoot().clone()
-        remove(newTree, toRemove)
-        return newTree
-    }
-
-    def private remove(tree, toRemove) {
-        def oldNode = tree.get(tree, toRemove)
-        def index
-        oldNode.parent.children.eachWithIndex { it, i ->
-            if (it.isEqual(toRemove)) {
-                index = i
-            }
-        }
-        oldNode.parent.children.remove(index)
+        
     }
 }

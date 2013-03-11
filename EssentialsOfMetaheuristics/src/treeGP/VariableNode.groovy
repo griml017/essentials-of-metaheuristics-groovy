@@ -1,11 +1,11 @@
 package treeGP
 
 class VariableNode extends GenericNode {
-    def VariableNode(String name) {
-           this.name = name
+    def VariableNode(String value) {
+           this.value = value
     }
     
     def clone() {
-        new VariableNode(name)
+        new VariableNode(value)
     }
 }
