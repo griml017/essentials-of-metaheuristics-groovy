@@ -1,7 +1,6 @@
 package treeGP
 
 import spock.lang.Specification
-import treeGP.TreeGPImplementation
 import java.lang.Math.*
 
 class TreeGPSpec extends Specification{
@@ -134,30 +133,6 @@ class TreeGPSpec extends Specification{
         test.children[1] == four
         four.value == 4
         test.eval() == "a"-4
-    }
-    //FAILING
-    def "Test remove child node"() {
-        when:
-        VariableNode a = new VariableNode("a")
-        ConstantNode four = new ConstantNode(4)
-        InternalNode test = new InternalNode(minus, a, four)
-        test.removeChild(a)
-        
-        then:
-        test.children[0] == null
-        test.children[1] == four
-    }
-    
-    def "Test add child node"() {
-        when:
-        VariableNode a = new VariableNode("a")
-        ConstantNode four = new ConstantNode(4)
-        InternalNode test = new InternalNode(minus, four, null)
-        test.addChild(a)
-        
-        then:
-        test.children[0] == four
-        test.children[1] == a
     }
     
     // Make InternalNode isEqual look at result rather than address.

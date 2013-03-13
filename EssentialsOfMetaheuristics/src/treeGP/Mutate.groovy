@@ -29,7 +29,8 @@ class Mutate {
     
     def addNode() {
         if (current.isALeaf == false) {
-            current.addChild(nodeList[rand.nextInt(3)])
+            current.children[0] = nodeList[rand.nextInt(3)]
+            current.children[1] = nodeList[rand.nextInt(3)]
             current = current.children[0]
         }
     }
