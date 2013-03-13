@@ -23,10 +23,21 @@ class TreeGPImplementation extends GenericNode {
     def current = root
     
     def createTree() {
-        if (current.isALeaf == false) {
-            current.addChild(nodeList[rand.nextInt(3)])
-            current = current.children[0]
+        while (current.size() < 20) {
+            current.recurseAdd()
         }
     }
     
+    def recurseAdd() {
+        if (this.isALeaf == false) {
+            this.children[0] = nodeList[rand.nextInt(3)]
+            this.children[1] = nodeList[rand.nextInt(3)]
+            this = this.children[0]
+        } else if (current.isALeaf == true) {
+            this = current.parent
+            this = current.children[1]
+        } else {
+            return
+        }
+    }
 }

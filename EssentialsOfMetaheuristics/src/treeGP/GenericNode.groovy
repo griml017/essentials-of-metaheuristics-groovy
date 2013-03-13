@@ -41,7 +41,7 @@ class GenericNode {
                 InternalNode copy = new InternalNode(function, childrenCopies[0], childrenCopies[1])
                 return copy
             } else {
-                throw new IOException()
+                throw new IllegalStateException()
             }
         } else {
             if (this instanceof VariableNode) {
@@ -87,6 +87,8 @@ class GenericNode {
     def get(root, toGet) {
         if(root.isEqual(toGet)) {
             getValue = root
+        } else if (root == null) {
+            getValue = null
         } else {
             root.children.each {
                 if (it != null) {    
@@ -96,7 +98,7 @@ class GenericNode {
                         get(it, toGet)
                     }
                 } else {
-                    getValue = null
+                    getValue = root
                 }
             }
         }
