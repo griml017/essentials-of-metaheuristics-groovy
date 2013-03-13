@@ -152,12 +152,12 @@ class TreeGPSpec extends Specification{
         when:
         VariableNode a = new VariableNode("a")
         ConstantNode four = new ConstantNode(4)
-        InternalNode test = new InternalNode(minus, null, four)
+        InternalNode test = new InternalNode(minus, four, null)
         test.addChild(a)
         
         then:
-        test.children[0] == a
-        test.children[1] == four
+        test.children[0] == four
+        test.children[1] == a
     }
     
     // Make InternalNode isEqual look at result rather than address.

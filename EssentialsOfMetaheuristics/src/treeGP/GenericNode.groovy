@@ -2,7 +2,7 @@ package treeGP
 
 class GenericNode {
     def parent = null
-    def children = []
+    def children = [null, null]
     //Constant orVariable Nodes
     def value = null
     //Internal Node...
@@ -25,10 +25,24 @@ class GenericNode {
     def clone() {
         if (this instanceof InternalNode) {
             def childrenCopies = []
-            childrenCopies.add(children[0].clone())
-            childrenCopies.add(children[1].clone())
-            InternalNode copy = new InternalNode(function, childrenCopies[0], childrenCopies[1])
-            return copy
+            if (children[0] != null && children[1] != null) {
+                childrenCopies.add(children[0].clone())
+                childrenCopies.add(children[1].clone())
+                InternalNode copy = new InternalNode(function, childrenCopies[0], childrenCopies[1])
+                return copy
+            } else if (children[0] == null && children[1] != null) {
+                childrenCopies.add(null)
+                childrenCopies.add(children[1].clone())
+                InternalNode copy = new InternalNode(function, childrenCopies[0], childrenCopies[1])
+                return copy
+            } else if (children[0] != null && children[1] == null) {
+                childrenCopies.add(children[0].clone())
+                childrenCopies.add(null)
+                InternalNode copy = new InternalNode(function, childrenCopies[0], childrenCopies[1])
+                return copy
+            } else {
+                throw new IOException()
+            }
         } else {
             if (this instanceof VariableNode) {
                 def copy = new VariableNode(this.value)
@@ -75,10 +89,14 @@ class GenericNode {
             getValue = root
         } else {
             root.children.each {
-                if (it.isEqual(toGet)) {
-                    getValue = it
+                if (it != null) {    
+                    if (it.isEqual(toGet)) {
+                        getValue = it
+                    } else {
+                        get(it, toGet)
+                    }
                 } else {
-                    get(it, toGet)
+                    getValue = null
                 }
             }
         }
