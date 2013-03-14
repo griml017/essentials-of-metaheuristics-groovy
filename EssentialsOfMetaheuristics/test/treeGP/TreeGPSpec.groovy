@@ -2,6 +2,7 @@ package treeGP
 
 import spock.lang.Specification
 import java.lang.Math.*
+import TreeGPImplementation
 
 class TreeGPSpec extends Specification{
     def plus = {x, y -> x+y}
@@ -135,6 +136,22 @@ class TreeGPSpec extends Specification{
         test.eval() == "a"-4
     }
     
+    def "Test adding a node to an internal Node"() {
+        when:
+        VariableNode a = new VariableNode("a")
+        ConstantNode four = new ConstantNode(4)
+        InternalNode test = new InternalNode(minus, null, null)
+        test.children[0] = a
+        test.children[1] = four
+        
+        then:
+        test.children[0] == a
+        a.value == "a"
+        test.children[1] == four
+        four.value == 4
+        test.eval() == "a"-4
+    }
+    
     // Make InternalNode isEqual look at result rather than address.
     def "Test is equal" () {
         when: 
@@ -167,6 +184,8 @@ class TreeGPSpec extends Specification{
         aCopied.value == a.value
         testCopied.function == aMinusFour.function
         testCopied.children[0].value == aMinusFour.children[0].value
-        
+    }
+    
+    def "test build tree" () {
     }
 }
