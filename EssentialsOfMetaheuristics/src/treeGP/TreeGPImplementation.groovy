@@ -19,7 +19,7 @@ class TreeGPImplementation extends GenericNode {
 
     def nodeList = [new InternalNode(function, leftChild: null, rightChild: null), new ConstantNode(rand.nextInt(10)), new VariableNode(variable)]
 
-    def root = nodeList[rand.nextInt(3)]
+    def root = functionList[rand.nextInt(5)]
     def current = root
     def treeStack = new Stack()
 
@@ -29,9 +29,10 @@ class TreeGPImplementation extends GenericNode {
             if (current.isALeaf == false) {
                 treeStack.push(nodeList[rand.nextInt(3)])
                 treeStack.push(nodeList[rand.nextInt(3)])
-                current = treeStack.pop()
+                current = treeStack.peek()
             } else if (current.isALeaf == true) {
-                current = root.children[1]
+                treeStack.pop()
+                current = treeStack.peek()
             } else {
                 break
             }

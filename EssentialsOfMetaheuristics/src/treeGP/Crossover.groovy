@@ -6,7 +6,6 @@ class Crossover {
     def rootTree = this.getRoot()
     Random rand = new Random()
     def c = 0
-    def a = rand.nextInt(c)+1
 
     def correctNode(node) {
         if (node instanceof InternalNode) { // check to see if the root node is an internalNode
@@ -20,7 +19,7 @@ class Crossover {
         if (c == 0) {
             return null
         } else {
-            def a = rand.nextInt(c+1)
+            def a = rand.nextInt(c)+1
             c = 0
             return pickNode(rootTree, a)
         }
