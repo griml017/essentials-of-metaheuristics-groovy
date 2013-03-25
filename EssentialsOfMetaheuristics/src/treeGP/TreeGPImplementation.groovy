@@ -21,19 +21,22 @@ class TreeGPImplementation extends GenericNode {
 
     def root = nodeList[rand.nextInt(3)]
     def current = root
+    def treeStack = new Stack()
 
-    public createTree() {
-        while (current.size() < 20) {
+    public buildTree() {
+        treeStack.push(root)
+        while (treeStack.size() < 20) {
             if (current.isALeaf == false) {
-                current.children[0] = nodeList[rand.nextInt(3)]
-                current.children[1] = nodeList[rand.nextInt(3)]
-                current = current.children[0]
+                treeStack.push(nodeList[rand.nextInt(3)])
+                treeStack.push(nodeList[rand.nextInt(3)])
+                current = treeStack.pop()
             } else if (current.isALeaf == true) {
-                current = current.parent
-                current = current.children[1]
+                current = root.children[1]
             } else {
-                return
+                break
             }
         }
+        return treeStack
     }
 }
+

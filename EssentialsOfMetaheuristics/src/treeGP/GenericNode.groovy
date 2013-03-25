@@ -9,7 +9,7 @@ class GenericNode {
     def function = null
     def isALeaf = true
 
-    //"each" resource: http://www.ibm.com/developerworks/java/library/j-pg04149/index.html
+    @Override
     def size() {
         if (!children.size() == 0) {
             def countTotal = 0
@@ -41,7 +41,7 @@ class GenericNode {
                 InternalNode copy = new InternalNode(function, childrenCopies[0], childrenCopies[1])
                 return copy
             } else {
-                throw new IllegalStateException()
+                throw new IOException()
             }
         } else {
             if (this instanceof VariableNode) {
@@ -87,8 +87,6 @@ class GenericNode {
     def get(root, toGet) {
         if(root.isEqual(toGet)) {
             getValue = root
-        } else if (root == null) {
-            getValue = null
         } else {
             root.children.each {
                 if (it != null) {    
@@ -98,7 +96,7 @@ class GenericNode {
                         get(it, toGet)
                     }
                 } else {
-                    getValue = root
+                    getValue = null
                 }
             }
         }

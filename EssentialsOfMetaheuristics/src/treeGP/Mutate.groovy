@@ -21,9 +21,10 @@ class Mutate {
     def mutate(node) {
         if (node instanceof InternalNode) {
             node.function = functionList[rand.nextInt(5)]
-        } else {
+        } else if (node instanceof ConstantNode){
             node.value = rand.nextInt(10)
-        }      
-        
+        } else {
+            node.value = variableList[rand.nextInt(6)]
+        }
     }
 }
