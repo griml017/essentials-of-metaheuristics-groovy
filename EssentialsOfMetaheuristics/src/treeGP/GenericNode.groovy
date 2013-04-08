@@ -1,6 +1,10 @@
 package treeGP
 
-class GenericNode {
+import treeGP.InternalNode
+import treeGP.ConstantNode
+import treeGP.VariableNode
+
+abstract class GenericNode {
     def parent = null
     def children = [null, null]
     //Constant orVariable Nodes
@@ -21,7 +25,8 @@ class GenericNode {
             return 1
         }
     }
-
+    
+    @Override
     def clone() {
         if (this instanceof InternalNode) {
             def childrenCopies = []
@@ -105,18 +110,19 @@ class GenericNode {
 
     def getValue = null
 
-    def eval() {
-        def evaluation
-        if (children.size() != 0) {
-            evaluation = function(children[0].value, children[1].value)
-            return evaluation
+    def getArity() {
+        if (function == plus || function == minus || function == multiply || function == div || function == mod) {
+            return 2
         } else {
-            if (value instanceof String) {
-                children.get(value)
-            } else {
-                value
-            }
+            return 0
         }
     }
-
+    
+    abstract eval(varMap);
+    
+    def plus = {x, y -> x+y}
+    def minus = {x, y -> x-y}
+    def multiply = {x, y -> x*y}
+    def div = {x, y -> x/y}
+    def mod = {x, y -> x%y}
 }

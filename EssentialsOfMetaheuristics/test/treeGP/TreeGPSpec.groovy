@@ -187,5 +187,17 @@ class TreeGPSpec extends Specification{
     }
     
     def "test build tree" () {
+        when:
+        def plus = {x, y -> x+y}
+        ConstantNode x = new ConstantNode(2)
+        def left = new InternalNode(plus, Math.pow(x.value, 4), Math.pow(x.value, 3))
+        def right = new InternalNode(plus, Math.pow(x.value, 2), Math.pow(x.value, 1))
+        InternalNode node = new InternalNode(plus, left, right)
+        
+        then:
+//        left.eval() == 24
+//        right.eval() == 6
+        node.eval() == 30
     }
+
 }

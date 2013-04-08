@@ -3,30 +3,24 @@ package problems
 import java.util.Random
 import treeGP.*
 
-
-
-
 class SymbolicRegression {
+    def resultPoints
+    def maxIterations = 10000
+    def evalCount = 0
     Random rand = new Random()
     ArrayList<BigDecimal> randValues = new ArrayList<BigDecimal>(20)
     def plus = {x, y -> x+y}
     def power
-
-    def createRandValues() {
-        for (int i = 0; i < 20; i++) {
-            randValues[i] = ((i - 10)/10)
-            i++
+    
+    def quality = { a -> 
+        evalCount++
+        resultPoints.each {
+            quality = Math.abs(Math.sin(it) -(a.eval(it)))
         }
-        return randValues
+        return quality
     }
     
-    //x^4 + x^3 + x^2 + x =-----= or whatever function we want
-    ConstantNode x = new ConstantNode(randValues[rand.nextInt(20)])
-    
-    def left = new InternalNode(plus, Math.pow(x.value, 4), Math.pow(x.value, 3))
-    def right = new InternalNode(plus, Math.pow(x.value, 2), Math.pow(x.value, 1))
-    
-    InternalNode root = new InternalNode(plus, left, right)
-    
-
+    String toString() {
+        this.class.name.split("\\.")[-1] + "_" + "_" + maxIterations
+}
 }
